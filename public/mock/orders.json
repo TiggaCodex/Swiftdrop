@@ -1,0 +1,22 @@
+[
+  {
+    "id": "seed-001",
+    "item": "Documents",
+    "description": "Envelope with contract papers",
+    "pickup": "Ikeja",
+    "dropoff": "Victoria Island",
+    "phone": "08010000000",
+    "notes": "Leave with security if not home",
+    "status": "On the way",
+    "history": [
+      { "status": "Created", "ts": "2025-10-25T09:00:00.000Z" },
+      { "status": "Assigned", "ts": "2025-10-25T09:05:00.000Z" },
+      { "status": "Picked", "ts": "2025-10-25T09:15:00.000Z" },
+      { "status": "On the way", "ts": "2025-10-25T09:35:00.000Z" }
+    ],
+    "otp": "482913",
+    "proof": null,
+    "createdAt": "2025-10-25T09:00:00.000Z",
+    "updatedAt": "2025-10-25T09:35:00.000Z"
+  }
+]
