@@ -14,11 +14,23 @@ export default function Home() {
     }
   }, []);
 
+  // Handle "Get Started" button click
+  const handleGetStarted = () => {
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (loggedInUser && loggedInUser.username) {
+      // ✅ User is logged in → Go to Create Order
+      navigate("/create-order");
+    } else {
+      // ❌ Not logged in → Save redirect target and go to Login
+      localStorage.setItem("redirectAfterLogin", "/create-order");
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
       {/* HERO SECTION */}
       <section className="relative overflow-hidden py-24 px-6 text-center bg-gradient-to-r from-red-600 via-red-500 to-red-700 text-white">
-        {/* 👇 Welcome message (only if logged in) */}
         {username && (
           <motion.p
             className="text-xl mb-4 font-semibold"
@@ -44,12 +56,12 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.8 }}
         >
-          Fast, reliable, and affordable delivery — from door to door.  
+          Fast, reliable, and affordable delivery — from door to door.
           Create orders, track deliveries, and manage logistics effortlessly.
         </motion.p>
         <div className="flex justify-center gap-4">
           <button
-            onClick={() => navigate("/create-order")}
+            onClick={handleGetStarted}
             className="bg-white text-red-600 font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition"
           >
             Get Started

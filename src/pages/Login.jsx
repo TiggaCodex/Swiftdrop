@@ -13,13 +13,11 @@ export default function Login() {
     setError("");
     setMessage("");
 
-    // Basic validation
     if (!email.trim() || !password.trim()) {
       setError("Please enter both email and password.");
       return;
     }
 
-    // Retrieve registered users
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const foundUser = users.find(
       (u) => u.email.toLowerCase() === email.toLowerCase()
@@ -40,9 +38,15 @@ export default function Login() {
 
     setMessage("✅ Login successful! Redirecting...");
 
-    // Redirect after short delay + reload to update Navbar
+    // ✅ Check for saved redirect route
+    const redirectPath = localStorage.getItem("redirectAfterLogin") || "/";
+
+    // Clear redirectAfterLogin so it doesn't affect future logins
+    localStorage.removeItem("redirectAfterLogin");
+
+    // Redirect to intended page
     setTimeout(() => {
-      navigate("/");
+      navigate(redirectPath);
       window.location.reload();
     }, 800);
   };
