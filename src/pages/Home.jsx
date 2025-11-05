@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 export default function Home() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
 
   // Load logged-in user info
   useEffect(() => {
@@ -18,13 +19,39 @@ export default function Home() {
   const handleGetStarted = () => {
     const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
     if (loggedInUser && loggedInUser.username) {
-      // ✅ User is logged in → Go to Create Order
       navigate("/create-order");
     } else {
-      // ❌ Not logged in → Save redirect target and go to Login
       localStorage.setItem("redirectAfterLogin", "/create-order");
       navigate("/login");
     }
+  };
+
+  // ✅ Handle Newsletter Subscription
+  const handleSubscribe = () => {
+    if (!email.trim()) {
+      alert("Please enter your email address.");
+      return;
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    // Save email to localStorage
+    const savedEmails = JSON.parse(localStorage.getItem("subscribers")) || [];
+    if (savedEmails.includes(email)) {
+      alert("You're already subscribed!");
+      return;
+    }
+    savedEmails.push(email);
+    localStorage.setItem("subscribers", JSON.stringify(savedEmails));
+
+    // Show confirmation and clear input
+    alert("🎉 Subscribed successfully!");
+    setEmail("");
   };
 
   return (
@@ -97,32 +124,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FEATURED SERVICES */}
+      {/* SERVICES */}
       <section className="py-20 bg-white dark:bg-gray-900">
         <h2 className="text-3xl font-bold text-center mb-12">Our Core Services</h2>
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-6">
           {[
-            {
-              title: "Same-Day Delivery",
-              desc: "Fast intra-city delivery within hours, available every day.",
-            },
-            {
-              title: "Nationwide Shipping",
-              desc: "Send packages across states with reliable, affordable rates.",
-            },
-            {
-              title: "Global Shipping",
-              desc: "Send packages globally at affordable rates.",
-            },
+            { title: "Same-Day Delivery", desc: "Fast intra-city delivery within hours." },
+            { title: "Nationwide Shipping", desc: "Send packages across states affordably." },
+            { title: "Global Shipping", desc: "Send packages globally at affordable rates." },
           ].map(({ title, desc }) => (
             <motion.div
               key={title}
               className="bg-gray-50 dark:bg-gray-800 rounded-xl shadow-md p-8 hover:shadow-2xl transition"
               whileHover={{ y: -5 }}
             >
-              <h3 className="text-xl font-semibold text-red-600 dark:text-red-400 mb-2">
-                {title}
-              </h3>
+              <h3 className="text-xl font-semibold text-red-600 dark:text-red-400 mb-2">{title}</h3>
               <p>{desc}</p>
             </motion.div>
           ))}
@@ -138,38 +154,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="py-20 bg-gray-100 dark:bg-gray-800">
-        <h2 className="text-3xl font-bold text-center mb-12">What Customers Say</h2>
-        <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-          {[
-            { name: "Amina O.", comment: "SwiftDrop is my business lifeline — always fast and reliable!" },
-            { name: "David K.", comment: "The tracking system is top-notch. I always know where my package is!" },
-          ].map(({ name, comment }) => (
-            <motion.div
-              key={name}
-              className="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-md"
-              whileHover={{ scale: 1.02 }}
-            >
-              <p className="italic mb-4">“{comment}”</p>
-              <h4 className="font-semibold text-red-600 dark:text-red-400">{name}</h4>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* CONTACT SECTION */}
-      <section className="py-20 bg-gradient-to-r from-red-600 to-red-700 text-white text-center">
-        <h2 className="text-3xl font-bold mb-6">Need Help With a Delivery?</h2>
-        <p className="mb-8 text-lg">Our support team is always ready to assist you.</p>
-        <button
-          onClick={() => navigate("/contact")}
-          className="bg-white text-red-600 font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition"
-        >
-          Contact Support
-        </button>
-      </section>
-
       {/* FOOTER */}
       <footer className="bg-gray-900 text-gray-300 py-10 px-6 text-center">
         <div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-8 mb-8">
@@ -178,10 +162,8 @@ export default function Home() {
             <p className="text-sm text-gray-400">
               Fast, reliable, and transparent delivery with real-time tracking and nationwide reach.
             </p>
-            <p className="text-sm text-gray-400 mt-2">
-              Delivering speed, trust, and excellence across every mile.
-            </p>
           </div>
+
           <div>
             <h4 className="text-lg font-semibold mb-3">Quick Links</h4>
             <ul className="space-y-2 text-sm">
@@ -192,21 +174,29 @@ export default function Home() {
               <li><a href="/login" className="hover:text-red-400">Login</a></li>
             </ul>
           </div>
+
           <div>
             <h4 className="text-lg font-semibold mb-3">Contact</h4>
-            <p className="text-sm text-gray-400">📍 Malhub, Ilofa Road, Ilorin, Kwara State, Nigeria</p>
-            <p className="text-sm text-gray-400">📞 +234 811 496 5493, +234 706 269 8171</p>
+            <p className="text-sm text-gray-400">📍 Malhub, Ilofa Road, Ilorin, Kwara State</p>
+            <p className="text-sm text-gray-400">📞 +234 811 496 5493</p>
             <p className="text-sm text-gray-400">✉ support@S&Aswiftdrop.com</p>
           </div>
+
+          {/* ✅ Newsletter with working Subscribe */}
           <div>
             <h4 className="text-lg font-semibold mb-3">Newsletter</h4>
             <div className="flex">
               <input
                 type="email"
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="p-2 rounded-l-md border-none outline-none w-full text-gray-800"
               />
-              <button className="bg-red-600 px-4 rounded-r-md text-white hover:bg-red-700">
+              <button
+                onClick={handleSubscribe}
+                className="bg-red-600 px-4 rounded-r-md text-white hover:bg-red-700"
+              >
                 Subscribe
               </button>
             </div>
