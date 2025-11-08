@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import howItWorksImg from "../assets/how-it-works.png"; // 🖼 Add your image path
+import coreServicesImg from "../assets/core-services.png"; // 🖼 Add your image path
 
 export default function Home() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
 
-  // Load logged-in user info
   useEffect(() => {
     const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
     if (loggedInUser && loggedInUser.username) {
@@ -15,7 +16,6 @@ export default function Home() {
     }
   }, []);
 
-  // Handle "Get Started" button click
   const handleGetStarted = () => {
     const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
     if (loggedInUser && loggedInUser.username) {
@@ -26,21 +26,16 @@ export default function Home() {
     }
   };
 
-  // ✅ Handle Newsletter Subscription
   const handleSubscribe = () => {
     if (!email.trim()) {
       alert("Please enter your email address.");
       return;
     }
-
-    // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       alert("Please enter a valid email address.");
       return;
     }
-
-    // Save email to localStorage
     const savedEmails = JSON.parse(localStorage.getItem("subscribers")) || [];
     if (savedEmails.includes(email)) {
       alert("You're already subscribed!");
@@ -48,8 +43,6 @@ export default function Home() {
     }
     savedEmails.push(email);
     localStorage.setItem("subscribers", JSON.stringify(savedEmails));
-
-    // Show confirmation and clear input
     alert("🎉 Subscribed successfully!");
     setEmail("");
   };
@@ -75,7 +68,7 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          S & A SwiftDrop
+         SwiftDrop
         </motion.h1>
         <motion.p
           className="text-lg md:text-xl mb-8 max-w-3xl mx-auto"
@@ -105,6 +98,21 @@ export default function Home() {
       {/* HOW IT WORKS */}
       <section className="py-20 bg-gray-100 dark:bg-gray-800">
         <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
+
+        {/* 🖼 NEW IMAGE SECTION */}
+        <motion.div
+          className="max-w-4xl mx-auto mb-12"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <img
+            src={howItWorksImg}
+            alt="How it works infographic"
+            className="rounded-xl shadow-xl w-full"
+          />
+        </motion.div>
+
         <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-8 text-center">
           {[
             { step: "1", title: "Book Delivery", desc: "Enter sender and receiver details easily." },
@@ -127,6 +135,21 @@ export default function Home() {
       {/* SERVICES */}
       <section className="py-20 bg-white dark:bg-gray-900">
         <h2 className="text-3xl font-bold text-center mb-12">Our Core Services</h2>
+
+        {/* 🖼 NEW IMAGE SECTION */}
+        <motion.div
+          className="max-w-5xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <img
+            src={coreServicesImg}
+            alt="Core services illustration"
+            className="rounded-xl shadow-lg w-full"
+          />
+        </motion.div>
+
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-6">
           {[
             { title: "Same-Day Delivery", desc: "Fast intra-city delivery within hours." },
@@ -154,11 +177,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/* FOOTER (unchanged) */}
       <footer className="bg-gray-900 text-gray-300 py-10 px-6 text-center">
         <div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-8 mb-8">
           <div>
-            <h3 className="text-lg font-bold text-white mb-3">S & A SwiftDrop</h3>
+            <h3 className="text-lg font-bold text-white mb-3">SwiftDrop</h3>
             <p className="text-sm text-gray-400">
               Fast, reliable, and transparent delivery with real-time tracking and nationwide reach.
             </p>
@@ -179,10 +202,9 @@ export default function Home() {
             <h4 className="text-lg font-semibold mb-3">Contact</h4>
             <p className="text-sm text-gray-400">📍 Malhub, Ilofa Road, Ilorin, Kwara State</p>
             <p className="text-sm text-gray-400">📞 +234 811 496 5493</p>
-            <p className="text-sm text-gray-400">✉ support@S&Aswiftdrop.com</p>
+            <p className="text-sm text-gray-400">✉ support@swiftdrop.com</p>
           </div>
 
-          {/* ✅ Newsletter with working Subscribe */}
           <div>
             <h4 className="text-lg font-semibold mb-3">Newsletter</h4>
             <div className="flex">
@@ -203,7 +225,7 @@ export default function Home() {
           </div>
         </div>
         <p className="text-sm text-gray-500 mt-4">
-          © {new Date().getFullYear()} S & A SwiftDrop. All rights reserved.
+          © {new Date().getFullYear()} SwiftDrop. All rights reserved.
         </p>
       </footer>
     </div>

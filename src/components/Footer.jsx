@@ -13,7 +13,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-3 gap-10">
         {/* Company Info */}
         <div>
-          <h2 className="text-2xl font-bold text-white mb-3">S & A SwiftDrop</h2>
+          <h2 className="text-2xl font-bold text-white mb-3">SwiftDrop</h2>
           <p className="text-gray-400 mb-4">
             Fast, reliable, and transparent delivery platform with real-time
             tracking and nationwide reach.
@@ -102,7 +102,7 @@ const Footer = () => {
           <h3 className="text-xl font-semibold text-white mb-3">Contact Us</h3>
           <p className="text-gray-400 mb-2">
             <span className="font-semibold text-gray-200">Email:</span>{" "}
-            support@S&Aswiftdrop.com
+            support@swiftdrop.com
           </p>
           <p className="text-gray-400 mb-2">
             <span className="font-semibold text-gray-200">Phone:</span>{" "}
@@ -117,7 +117,7 @@ const Footer = () => {
 
       {/* Bottom bar */}
       <div className="border-t border-gray-700 text-center py-4 text-gray-500 text-sm">
-        © {new Date().getFullYear()} S&A SwiftDrop. All rights reserved.
+        © {new Date().getFullYear()} SwiftDrop. All rights reserved.
       </div>
     </footer>
   );
