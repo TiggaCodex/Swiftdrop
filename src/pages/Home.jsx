@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import howItWorksImg from "../assets/how-it-works.png"; // 🖼 Add your image path
-import coreServicesImg from "../assets/core-services.png"; // 🖼 Add your image path
+import howItWorksImg from "../assets/how-it-works.png"; 
+import coreServicesImg from "../assets/core-services.png";
 
 export default function Home() {
   const navigate = useNavigate();
